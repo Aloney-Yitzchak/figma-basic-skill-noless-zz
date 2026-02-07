@@ -1,0 +1,31 @@
+name: Autograding Tests
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Required Files Check
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: 'Required Files'
+          command: 'test -f DESIGN.md && ls screenshots/*.png 2>/dev/null | wc -l | xargs test 2 -le'
+          timeout: '1'
+          max-score: '50'
+
+      - name: Content Completeness
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: 'Content Completeness'
+          command: 'test $(wc -l < DESIGN.md) -ge 20'
+          timeout: '1'
+          max-score: '50'
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1

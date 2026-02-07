@@ -1,0 +1,13 @@
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*~
+
+# Temp files
+*.tmp
